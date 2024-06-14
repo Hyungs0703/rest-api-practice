@@ -1,0 +1,16 @@
+### 학생 등록 테스트
+POST http://localhost:8080/students
+Content-Type: application/json
+
+{
+  "id": 5,
+  "studentNumber": "20240614",
+  "name": "김형석3",
+  "email": "hyungs3@email.com"
+}
+
+### 학생 조회 테스트
+GET http://localhost:8080/students/2
+
+### 학생 학번 조회 테스트
+GET http://localhost:8080/students?number=20240614
