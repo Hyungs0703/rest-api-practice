@@ -1,35 +1,40 @@
 package com.sparta.restapipractice.entity;
 
+import com.sparta.restapipractice.dto.StudentRequestDto;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
+import java.util.List;
+
+@Entity
 @Getter
+@NoArgsConstructor
+@Table
 public class Student {
 
-    /**
-     * 고유번호 .id
-     */
-    private final Long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-    /**
-     * 학번
-     */
-    private final String studentNumber;
+    @Column
+    private String studentNumber;
+    @Column
+    private String name;
+    @Email
+    @Column
+    private String email;
 
-    /**
-     * 이름
-     */
-    private final String name;
+    @OneToMany(mappedBy = "student")
+    private List<Test> testList = new ArrayList<>();
 
-    /**
-     * 이메일
-     */
-    private final String email;
 
-    public Student(Long id, String studentNumber, String name, String email) {
-        this.id = id;
-        this.studentNumber = studentNumber;
-        this.name = name;
-        this.email = email;
+    public Student(StudentRequestDto studentRequestDto) {
+        this.studentNumber = studentRequestDto.getStudentNumber();
+        this.name = studentRequestDto.getName();
+        this.email = studentRequestDto.getEmail();
     }
 
 }

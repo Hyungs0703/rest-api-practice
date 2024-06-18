@@ -1,33 +1,16 @@
 package com.sparta.restapipractice.dto;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 @Getter
+@AllArgsConstructor
 public class StudentRequestDto {
-    /**
-     * 고유번호 .id
-     */
-    private final Long id;
 
-    /**
-     * 학번
-     */
-    private final String studentNumber;
+    private String studentNumber;
 
-    /**
-     * 이름
-     */
-    private final String name;
+    private String name;
 
-    /**
-     * 이메일
-     */
-    private final String email;
+    private String email;
 
-    public StudentRequestDto(Long id, String studentNumber, String name, String email) {
-        this.id = id;
-        this.studentNumber = studentNumber;
-        this.name = name;
-        this.email = email;
-    }
 }
