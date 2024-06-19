@@ -3,27 +3,30 @@ POST http://localhost:8080/students
 Content-Type: application/json
 
 {
-  "studentNumber": "20240618442",
-  "name": "김형석",
-  "email": "test@sparta.com"
+  "studentNumber": "20240619",
+  "name": "test",
+  "email": "test1234@sparta.com"
 }
 
 ### 학생 조회 테스트
 GET http://localhost:8080/students/1
 
 ### 학생 점수 등록 테스트
-POST http://localhost:8080/students/1/test
+POST http://localhost:8080/tests/1
 Content-Type: application/json
 
 {
-  "studentId": 1,
-  "score": 87.0,
-  "subjectType": "DB"
+  "score": 98.0,
+  "subjectType": "JPA"
 }
 
-### 학생 점수 조회 테스트
-GET http://localhost:8080/students/1/test
+### 학생 시험 조회 테스트
+GET http://localhost:8080/tests/1
 Content-Type: application/json
+
+{
+  "subjectType": "JPA"
+}
 
 
 ### 학생 학번 조회 테스트

@@ -15,37 +15,28 @@ import java.time.LocalDateTime;
 @Table
 public class Test {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "student_id")
-    private Student student;
+	@ManyToOne
+	@JoinColumn(name = "student_id")
+	private Student student;
 
-    @Column
-    private Float score;
+	@Column
+	private Float score;
 
-    //무조건 EnumType.STRING 으로만!!.
-    @Enumerated(value = EnumType.STRING)
-    private SubjectType subjectType;
+	//무조건 EnumType.STRING 으로만!!.
+	@Enumerated(value = EnumType.STRING)
+	private SubjectType subjectType;
 
-    @Column
-    private LocalDateTime examData;
+	@Column
+	private LocalDateTime examData;
 
-    public Test(Student student, Float score, SubjectType subjectType, LocalDateTime examData) {
-        this.student = student;
-        this.score = score;
-        this.subjectType = subjectType;
-        this.examData = examData;
-    }
-
-    public Test(TestRequestDto testRequestDto, Student student) {
-        this.student = student;
-        this.score = testRequestDto.getScore();
-        this.subjectType = SubjectType.valueOf(testRequestDto.getSubjectType());
-        this.examData = LocalDateTime.now();
-    }
-
-
+	public Test(Student student, TestRequestDto testRequestDto) {
+		this.student = student;
+		this.score = testRequestDto.getScore();
+		this.subjectType = testRequestDto.getSubjectType();
+		this.examData = LocalDateTime.now();
+	}
 }
