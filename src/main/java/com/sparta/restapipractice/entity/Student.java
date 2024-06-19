@@ -21,8 +21,10 @@ public class Student {
 
     @Column
     private String studentNumber;
+
     @Column
     private String name;
+
     @Email
     @Column
     private String email;

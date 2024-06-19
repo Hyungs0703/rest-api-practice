@@ -29,10 +29,18 @@ public class TestController {
         return ResponseEntity.status(HttpStatus.CREATED).body("등록이 완료되었습니다");
     }
 
-    //조회
+    //전체 조회
     @GetMapping("/test")
     public ResponseEntity<?> getTests (@RequestBody CheckTestRequestDto requestDto) {
         List<Test> testList = testService.getTests(requestDto);
         return ResponseEntity.status(HttpStatus.OK).body(testList);
     }
+
+//    //선택조회
+//    @GetMapping("/test")
+//    public ResponseEntity<?> getStudentByIdTestList (@PathVariable Long studentId) {
+//        TestResponseDto testList = testService.getStudentByIdTestList(studentId);
+//        return ResponseEntity.status(HttpStatus.FOUND).body(testList);
+//    }
+
 }

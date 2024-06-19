@@ -26,6 +26,7 @@ public class Test {
     @Column
     private Float score;
 
+    //무조건 EnumType.STRING 으로만!!.
     @Enumerated(value = EnumType.STRING)
     private SubjectType subjectType;
 

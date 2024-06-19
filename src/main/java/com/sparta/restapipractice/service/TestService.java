@@ -31,27 +31,39 @@ public class TestService {
             new IllegalArgumentException("해당 학생은 존재하지 않습니다"));
 
 
-        SubjectType subjectType1 = SubjectType.JPA;
-        SubjectType subjectType2 = SubjectType.DB;
+        if(testRequestDto.getSubjectType().equals(SubjectType.DB)|| testRequestDto.getSubjectType().equals(SubjectType.JPA)) {
 
-        if (!(testRequestDto.getSubjectType().equals(subjectType1.getType()) || !testRequestDto.getSubjectType().equals(subjectType2.getType()))) {
-            throw new IllegalArgumentException("해당 과목은 존재하지 않습니다");
         }
 
-        testRepository.save(new Test(testRequestDto, student));
     }
+
+
 
     //과목 타입 조회
     public List<Test> getTests (CheckTestRequestDto requestDto) {
         Student student = studentRepository.findById(requestDto.getStudentId()).orElseThrow(() ->
                 new IllegalArgumentException("해당 학생은 존재하지 않습니다"));
 
-        List<Test> testList = student.getTestList();
-        if (testList == null) {
-            return new ArrayList<>();
-        }
-        return testList;
+        List<Test> testList = student.
+                getTestList()
+                .stream()
+                .filter( s -> s.getSubjectType().equals(requestDto.getSubjectType()))
+                .toList();
 
+        return testList;
     }
+
+//    //학생 시험 리스트 조회
+//    public TestResponseDto getStudentByIdTestList(Long studentId) {
+//        //학생 존재 확인
+//        Student student = studentRepository.findById(studentId).orElseThrow(() ->
+//                new IllegalArgumentException("해당 학생은 존재하지 않습니다"));
+//        //시험 존재 유무 확인
+//        Test test = testRepository.findByIdOrderByAll(student.getId()).orElseThrow(()->
+//                new IllegalArgumentException("시험 이력이 없습니다."));
+//
+//        List<Test> testList = new ArrayList<>();
+//
+//    }
     //시험 조회
 }
