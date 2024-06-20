@@ -28,7 +28,6 @@ public class Student {
 	@Column
 	private String email;
 
-
 	public Student(StudentRequestDto studentRequestDto) {
 		this.studentNumber = studentRequestDto.getStudentNumber();
 		this.name = studentRequestDto.getName();

@@ -7,6 +7,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/students")
 public class StudentController {
@@ -32,46 +34,23 @@ public class StudentController {
 		return ResponseEntity.status(HttpStatus.OK).body(studentResponseDto);
 	}
 
+	//학번과 이메일로 학생을 조회한다.
+	//(GET) /students?number=20240614
+	//첫번째 성으로 학생들을 조회한다.
+	//(GET) /students?firstName=김
+	@GetMapping
+	public ResponseEntity<?> getStudent(
+			@RequestParam(value = "studentNumber", required = false) String studentNumber,
+			@RequestParam(value = "email", required = false) String email,
+			@RequestParam(value = "firstName", required = false) String firstName) {
 
-//    //학생 전체조회
-//    //(GET) /students
-//    //(GET) /students?number=20240614
-//    @GetMapping
-//    public ResponseEntity<?> getStudents(
-//            @RequestParam(value = "number",required = false) String studentNumber) {
-//                if(StringUtils.hasLength(studentNumber)) {
-//                    Student student = this.studentMap.getByNumber(studentNumber);
-//                    return ResponseEntity.status(HttpStatus.OK).body(student);
-//                }
-//
-//        List<Student> studentList = this.studentMap.getAll();
-//        return ResponseEntity.status(HttpStatus.OK).body(studentList);
-//    }
+		if (firstName == null) {
+			StudentResponseDto studentResponseDto = studentService.getStudent(studentNumber, email);
 
-//
-//    //URL로 입력받는 방법
-//    //1. PathVariable(path)            -> /students/1
-//    //2. RequestParam(parameter)       -> /students?number=20240614
-//
-//    /**
-//     * @PathVariable Long stduentId, @PathVariable Long subjectId
-//     *  -> /students/1/subjects/1
-//     */
-//
-//    /**
-//     * @RequestParam String studentNumber, @RequestParam String name
-//     * -> /students?number=20240614/name?=chris
-//     */
-//
-//    /**
-//     *  @GetMapping("/{studentId}/subjects/{subjectId}")
-//     *  public ResponseEntity<?> getStudentById(
-//     *  @PathVariable Long studentId,@PathVariable Long subjectId)
-//     */
-//
-//    /**
-//     * public ResponseEntity<?> sample(
-//     * @RequestParam String studentNumber,
-//     * @RequestParam String name)
-//     */
+			return ResponseEntity.status(HttpStatus.OK).body(studentResponseDto);
+		} else {
+			List<StudentResponseDto> studentResponseDto = studentService.getStudentNameList(firstName);
+			return ResponseEntity.status(HttpStatus.OK).body(studentResponseDto);
+		}
+	}
 }

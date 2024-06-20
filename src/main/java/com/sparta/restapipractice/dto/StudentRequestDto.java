@@ -7,10 +7,9 @@ import lombok.Getter;
 @AllArgsConstructor
 public class StudentRequestDto {
 
-    private String studentNumber;
+	private String studentNumber;
 
-    private String name;
+	private String name;
 
-    private String email;
-
+	private String email;
 }

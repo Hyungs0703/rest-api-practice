@@ -3,9 +3,9 @@ POST http://localhost:8080/students
 Content-Type: application/json
 
 {
-  "studentNumber": "20240619",
-  "name": "test",
-  "email": "test1234@sparta.com"
+  "studentNumber": "20240620",
+  "name": "김형석",
+  "email": "hyung0703@sparta.com"
 }
 
 ### 학생 조회 테스트
@@ -16,18 +16,19 @@ POST http://localhost:8080/tests/1
 Content-Type: application/json
 
 {
-  "score": 98.0,
-  "subjectType": "JPA"
-}
-
-### 학생 시험 조회 테스트
-GET http://localhost:8080/tests/1
-Content-Type: application/json
-
-{
+  "score": 95.0,
   "subjectType": "DB"
 }
 
+### 학생 시험 조회 테스트
+GET http://localhost:8080/tests/1?subjectName=JPA
 
-### 학생 학번 조회 테스트
-GET http://localhost:8080/students?number=20240614
+
+### 학번과 이메일로 학생을 조회한다.
+GET http://localhost:8080/students?studentNumber=20240620&email=hyung0703@sparta.com
+
+### 김씨 성의 학생들을 조회한다.
+GET http://localhost:8080/students?firstName=test
+
+### 점수가 70점 이상이고 80점 이하인 시험들을 내림차순으로 정렬하여 조회한다.
+GET http://localhost:8080/tests?firstScore=90&secondScore=100

@@ -1,6 +1,5 @@
 package com.sparta.restapipractice.service;
 
-import com.sparta.restapipractice.dto.CheckTestSubjectTypeRequestDto;
 import com.sparta.restapipractice.dto.TestRequestDto;
 import com.sparta.restapipractice.dto.TestResponseDto;
 import com.sparta.restapipractice.entity.Student;
@@ -8,20 +7,17 @@ import com.sparta.restapipractice.entity.SubjectType;
 import com.sparta.restapipractice.entity.Test;
 import com.sparta.restapipractice.repository.StudentRepository;
 import com.sparta.restapipractice.repository.TestRepository;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
+@AllArgsConstructor
 public class TestService {
 
 	private final TestRepository testRepository;
 	private final StudentRepository studentRepository;
-
-	public TestService(TestRepository testRepository, StudentRepository studentRepository) {
-		this.testRepository = testRepository;
-		this.studentRepository = studentRepository;
-	}
 
 	//시험저장
 	public TestResponseDto studentAddTest(Long studentId, TestRequestDto testRequestDto) {
@@ -39,18 +35,26 @@ public class TestService {
 
 
 	//학생 시험조회 조회
-	public List<TestResponseDto> studentGetTests(Long studentId, CheckTestSubjectTypeRequestDto requestDto) {
+	public List<TestResponseDto> studentGetTests(Long studentId, SubjectType subjectName) {
+		List<Test> studentTestList = testRepository.findAllByStudentId(studentId);
 
-		if (!(requestDto.getSubjectType().equals(SubjectType.DB) || requestDto.getSubjectType().equals(SubjectType.JPA))) {
+		if (!(subjectName.equals(SubjectType.JPA) || subjectName.equals(SubjectType.DB))) {
 			throw new IllegalArgumentException("해당 과목은 존재하지 않습니다");
 		}
 
-		List<Test> studentTestList = testRepository.findAllByStudentId(studentId);
-
-		SubjectType SubjectType;
 		return studentTestList.stream()
 				.map(s -> new TestResponseDto(s.getSubjectType(), s.getScore()))
-				.filter(s -> s.getSubjectType().equals(requestDto.getSubjectType()))
+				.filter(s -> s.getSubjectType().equals(subjectName))
+				.toList();
+	}
+
+	public List<TestResponseDto> getTestByScoreBetween(Float firstScore, Float secondScore) {
+
+		List<Test> testList = testRepository.findByScoreBetweenOrderByScoreDesc(firstScore, secondScore).orElseThrow(() ->
+				new NullPointerException("해당 점수 사이에 있는 점수는 존재하지 않습니다."));
+
+		return testList.stream()
+				.map(s -> new TestResponseDto(s.getSubjectType(), s.getScore()))
 				.toList();
 	}
 }
