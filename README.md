@@ -22,7 +22,8 @@
 
 ### 1.학번과 이메일로 조회한다.
     -  findByStudentNumberAndEmail
-        -  select *
+    
+         select *
         
         from Student
 
