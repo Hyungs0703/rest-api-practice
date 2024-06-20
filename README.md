@@ -22,3 +22,8 @@
 
 ### 1.학번과 이메일로 조회한다.
     -  findByStudentNumberAndEmail
+        select *
+        
+        from Student
+
+        where studentNumber = 1 and email = 'sparta@email.com'
